@@ -629,9 +629,8 @@ void print_array_20(const int (*p)[20], int size)
 {
     while (size--)
         //print_array(*p++, 20);
-    
 
-    printf("\n---------------------------------------------------------------\n");
+        printf("\n---------------------------------------------------------------\n");
     //test
     // int m[10][20];
     // set_random_20(m,10);
@@ -639,49 +638,211 @@ void print_array_20(const int (*p)[20], int size)
 }
 void set_matrix(int *p, int row, int col)
 {
-    for(int i=0;i<row;++i) {
-        for(int k=0;k<col;++k) {
-            p[i*col+k]=rand()%10;
+    for (int i = 0; i < row; ++i)
+    {
+        for (int k = 0; k < col; ++k)
+        {
+            p[i * col + k] = rand() % 10;
         }
-
     }
 }
 void print_matrix(int *p, int row, int col)
 {
-    for(int i=0;i<row;++i) {
-        for(int k=0;k<col;++k) {
-            printf("%d ",p[i*col+k]);
+    for (int i = 0; i < row; ++i)
+    {
+        for (int k = 0; k < col; ++k)
+        {
+            printf("%d ", p[i * col + k]);
         }
         printf("\n");
     }
-        printf("\n---------------------------------------------------------------\n");
+    printf("\n---------------------------------------------------------------\n");
 }
 void swap_str(char *px, char *py)
 {
     char temp[20];
-    strcpy(temp,px);
-    strcpy(px,py);
-    strcpy(py,temp);
-    
+    strcpy(temp, px);
+    strcpy(px, py);
+    strcpy(py, temp);
 }
-void sort_names(char(*p)[20], int size)
+void sort_names(char (*p)[20], int size)
 {
-    for(int i=0;i<size-1;++i){
-        for(int k=0;k<size-1-i;++k){
-            if(strcmp(p[k],p[k+1])>0){
-                swap_str(p[k],p[k+1]);
+    for (int i = 0; i < size - 1; ++i)
+    {
+        for (int k = 0; k < size - 1 - i; ++k)
+        {
+            if (strcmp(p[k], p[k + 1]) > 0)
+            {
+                swap_str(p[k], p[k + 1]);
             }
         }
     }
 }
- 
- int main(void)
+void *checked_malloc(size_t n)
 {
-    srand(time(NULL));
-    int a[SIZE];
-    set_array_rand(a, SIZE);
-    printArray(a, SIZE);
+    void *vp = malloc(n);
+    if (vp == NULL)
+    {
+        fprintf(stderr, "Bellek yetersiz...\n");
+        exit(EXIT_FAILURE);
+    }
+    return vp;
+}
+char *my_strdup(const char *p)
+{
+    char *pd = (char *)malloc(strlen(p) + 1); //+1-->'\0'
+    if (!pd)
+    {
+        fprintf(stderr, "Bellek yetersiz...\n");
+    }
+    return strcpy(pd, p);
+}
+char *strconcat(const char *p1, const char *p2)
+{
+    char *pd = (char *)malloc(strlen(p1) + strlen(p2) + 1);
+    if (!pd)
+    {
+        fprintf(stderr, "Bellek yetersiz...\n");
+        exit(EXIT_FAILURE);
+    }
+    strcpy(pd, p1); // VEYE
+    strcat(pd, p2); // return strcat(strcpy(pd,p1),p2);
 
-     
+    return pd;
+    //test
+    // printf("yazi girin\n");
+    // char str[SIZE];
+    // char str2[SIZE];
+    // sgets(str);
+    // printf("2. yaziyi girin\n");
+    // sgets(str2);
+    // char *pd=strconcat(str,str2);
+    // printf("%s + %s= %s\n",str,str2,pd);
+    //  free (pd);
+}
+char *get_name(void)
+{
+    static char buffer[SIZE];
+    printf("Bir isim girin: ");
+    sgets(buffer);
+    char *pd = malloc(strlen(buffer) + 1);
+    if (!pd)
+        return NULL;
+
+    return strcpy(pd, buffer);
+}
+
+// { Gercek matris değil, bellekte siralı degil
+//       int row,col;
+//       printf("satir ve sutun giriniz: ");
+//      scanf("%d%d",&row,&col);
+//     int **pd = (int **)malloc(row * sizeof(int *));
+//     if (!pd)
+//     {
+//         printf("Bellek yetersiz...");
+//         exit(EXIT_FAILURE);
+//     }
+//     for (int i = 0; i < row; ++i)
+//     {
+//         pd[i]=(int*)malloc(col*sizeof(int));
+//         if (!pd){
+//             printf("Bellek yetersiz...");
+//             exit(EXIT_FAILURE);
+//          }
+//     }
+//     for (int i = 0; i < row; ++i){
+//         for (int k = 0; k < col; ++k){
+//             pd[i][k]=rand()%10;
+//         }
+
+//     }
+//     for (int i = 0; i < row; ++i){
+//         for (int k = 0; k < col; ++k){
+//             printf("%d ",pd[i][k]=rand()%10);
+//         }
+//         printf("\n");
+//     }
+//     for (int i = 0; i < row; ++i){
+//         free(pd[i]);
+//     }
+//     free(pd);
+// }
+//---------------------------------------------------
+
+//{ tek boyutta matris, adresler ardışık
+      // int row, col;
+    // printf("satir ve sutun giriniz: ");
+    // scanf("%d%d", &row, &col);
+
+    // int *pd = (int *)malloc(row * col * sizeof(int));
+    // if (!pd)
+    // {
+    //     printf("bellek yetersiz...\n");
+    //     return 1;
+    // }
+    // for (int i = 0; i < row; ++i)
+    // {
+    //     for (int k = 0; k < col; ++k)
+    //     {
+    //         pd[i * col + k] = rand() % 10;
+    //     }
+    // }
+    // ////////////////
+    // for (int i = 0; i < row; ++i)
+    // {
+    //     for (int k = 0; k < col; ++k)
+    //     {
+    //         printf("%d ",pd[i * col + k]);
+    //     }
+    //     printf("\n");
+    // }
+    // free(pd);
+//}
+//-------------------------------------------------------
+
+//{ ardısık [][]
+    //   int row, col;
+    // printf("satir ve sutun giriniz: ");
+    // scanf("%d%d", &row, &col);
+
+    // int *pd = (int *)malloc(row * col * sizeof(int));
+    // if (!pd)
+    // {
+    //     printf("bellek yetersiz...\n");
+    //     return 1;
+    // }
+
+    // int **pp=(int**)malloc(row*sizeof(int)); // ** --> [][]
+    // if (!pp)
+    // {
+    //     printf("bellek yetersiz...\n");
+    //     return 1;
+    // }
+    // for (int k = 0; k < row; ++k)
+    //     {
+    //         pp[k] = pd+col+k;
+    //     }
+    //     for (int i = 0; i < row; ++i)
+    // {
+    //     for (int k = 0; k < col; ++k)
+    //     {
+    //         pp[i][k] = rand() % 10;
+    //     }
+    // }
+
+    //    for (int i = 0; i < row; ++i)
+    // {
+    //     for (int k = 0; k < col; ++k)
+    //     {
+    //         printf("%d ",pp[i][k]);
+    //     }
+    //     printf("\n");
+    // }
+    // free(pd);
+    // free(pp);
+//}
+
+int main(void)
+{
     
 }
