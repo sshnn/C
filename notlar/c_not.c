@@ -1,4 +1,4 @@
-#include <stdio.h>
+ #include <stdio.h>
 #include <string.h>
 #include <time.h>
 #include <stdlib.h>
@@ -770,79 +770,155 @@ char *get_name(void)
 //---------------------------------------------------
 
 //{ tek boyutta matris, adresler ardışık
-      // int row, col;
-    // printf("satir ve sutun giriniz: ");
-    // scanf("%d%d", &row, &col);
+// int row, col;
+// printf("satir ve sutun giriniz: ");
+// scanf("%d%d", &row, &col);
 
-    // int *pd = (int *)malloc(row * col * sizeof(int));
-    // if (!pd)
-    // {
-    //     printf("bellek yetersiz...\n");
-    //     return 1;
-    // }
-    // for (int i = 0; i < row; ++i)
-    // {
-    //     for (int k = 0; k < col; ++k)
-    //     {
-    //         pd[i * col + k] = rand() % 10;
-    //     }
-    // }
-    // ////////////////
-    // for (int i = 0; i < row; ++i)
-    // {
-    //     for (int k = 0; k < col; ++k)
-    //     {
-    //         printf("%d ",pd[i * col + k]);
-    //     }
-    //     printf("\n");
-    // }
-    // free(pd);
+// int *pd = (int *)malloc(row * col * sizeof(int));
+// if (!pd)
+// {
+//     printf("bellek yetersiz...\n");
+//     return 1;
+// }
+// for (int i = 0; i < row; ++i)
+// {
+//     for (int k = 0; k < col; ++k)
+//     {
+//         pd[i * col + k] = rand() % 10;
+//     }
+// }
+// ////////////////
+// for (int i = 0; i < row; ++i)
+// {
+//     for (int k = 0; k < col; ++k)
+//     {
+//         printf("%d ",pd[i * col + k]);
+//     }
+//     printf("\n");
+// }
+// free(pd);
 //}
-//-------------------------------------------------------
+//---------------------------------------------------
 
 //{ ardısık [][]
-    //   int row, col;
-    // printf("satir ve sutun giriniz: ");
-    // scanf("%d%d", &row, &col);
+//   int row, col;
+// printf("satir ve sutun giriniz: ");
+// scanf("%d%d", &row, &col);
 
-    // int *pd = (int *)malloc(row * col * sizeof(int));
-    // if (!pd)
-    // {
-    //     printf("bellek yetersiz...\n");
-    //     return 1;
-    // }
+// int *pd = (int *)malloc(row * col * sizeof(int));
+// if (!pd)
+// {
+//     printf("bellek yetersiz...\n");
+//     return 1;
+// }
+// int **pp=(int**)malloc(row*sizeof(int)); // ** --> [][]
+// if (!pp)
+// {
+//     printf("bellek yetersiz...\n");
+//     return 1;
+// }
+// for (int k = 0; k < row; ++k)
+//     {
+//         pp[k] = pd+col+k;
+//     }
+//     for (int i = 0; i < row; ++i)
+// {
+//     for (int k = 0; k < col; ++k)
+//     {
+//         pp[i][k] = rand() % 10;
+//     }
+// }
 
-    // int **pp=(int**)malloc(row*sizeof(int)); // ** --> [][]
-    // if (!pp)
-    // {
-    //     printf("bellek yetersiz...\n");
-    //     return 1;
-    // }
-    // for (int k = 0; k < row; ++k)
-    //     {
-    //         pp[k] = pd+col+k;
-    //     }
-    //     for (int i = 0; i < row; ++i)
-    // {
-    //     for (int k = 0; k < col; ++k)
-    //     {
-    //         pp[i][k] = rand() % 10;
-    //     }
-    // }
-
-    //    for (int i = 0; i < row; ++i)
-    // {
-    //     for (int k = 0; k < col; ++k)
-    //     {
-    //         printf("%d ",pp[i][k]);
-    //     }
-    //     printf("\n");
-    // }
-    // free(pd);
-    // free(pp);
+//    for (int i = 0; i < row; ++i)
+// {
+//     for (int k = 0; k < col; ++k)
+//     {
+//         printf("%d ",pp[i][k]);
+//     }
+//     printf("\n");
+// }
+// free(pd);
+// free(pp);
 //}
+//-------------------------------------------
 
+// {realloc-->NULL ise malloc gibi davranır
+// int n, n_add;
+// printf("kac tam sayi: ");
+// scanf("%d", &n);
+// int *pd = (int *)malloc(n * sizeof(int));
+// if (!pd)
+// {
+//     printf("bellek yetersiz...\n");
+//     return 1;
+// }
+// set_array_rand(pd, n);
+// print_array(pd, n);
+// printf("kac tam sayi ilave edilsin: ");
+// scanf("%d", &n_add);
+// pd = (int *)realloc(pd, (n + n_add) * sizeof(int));
+// if (!pd)
+// {
+//     printf("bellek yetersiz...\n");
+//     return 1;
+// }
+// set_array_rand(pd + n, n_add);
+// //memset(pd + n, 0, n_add * sizeof(int));
+// print_array(pd, n + n_add);
+// free(pd);
+// }
+char *create_password(void)
+{
+    int len = rand() % 8 + 4;
+    char *p = (char *)malloc(len + 1);
+    if (!p)
+        printf("bellek yetersiz...\n");
+
+    for (int i = 0; i < len; ++i)
+        p[i] = rand() % 26 + 'a';
+
+    p[len] = '\0';
+    return p;
+    //test
+    // char*p[5];
+    // for (int i=0;i<5;++i)
+    //     puts(p[i]=create_password());
+
+    // for (int i=0;i<5;++i)
+    //     free(p[i]);
+}
+//--------------------------------------------
+
+//CONST AND POINTER TO POINTER
+// int x=10;
+// int y=20;
+// int *p=&x;
+// int *q=&y;
+// int **ptr=&p;
+// //const int**ptr=&p-->**ptr=76 hatali,
+// //int *const *ptr=&p;---> *ptr=&y hatali
+// //const int *const *ptr=&y; --> *ptr=&y; ve **ptr=76; hatali
+// ptr=&q;
+// *ptr=&y;
+// **ptr=76;
+//------------------------------------------------------------------------
+
+//--------time.h--------
+// time_t timer;
+// time(&timer);
+// struct tm *p=localtime(&timer);
+// printf("%02d-%02d-%d %02d:%02d:%02d\n",p->tm_mday, p->tm_mon+1, p->tm_year +1900,
+// p->tm_hour,p->tm_min,p->tm_sec);
+
+void wait(double sec)
+{
+    clock_t start = clock();
+
+    while ((double)(clock() - start) / CLOCKS_PER_SEC < sec)
+        ;
+}
 int main(void)
 {
+    
     
 }
